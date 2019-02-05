@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import OrderList from "./OrderList";
-import * as API from "../services/api.js";
+import * as API from "../../services/api.js";
 import OrderModal from "./OrderModal";
 
 const today = new Date();
@@ -54,7 +54,8 @@ export default class OrderPage extends Component {
     });
   };
 
-  handleAddItem = inpValue => {
+  handleAddItem = (inpValue, e) => {
+	e.preventDefault();	  
     API.addOrderItem(inpValue).then(responseInpValue => {
       this.setState(prevState => ({
         orderlist: [...prevState.orderlist, responseInpValue]
@@ -87,7 +88,7 @@ export default class OrderPage extends Component {
         )}
         {isLoading && <p className="Load">LOADING...</p>}
         <form
-          onSubmit={() => this.handleAddItem({ date, price, address, raiting })}
+          onSubmit={(e) => this.handleAddItem({ date, price, address, raiting }, e)}
         >
           <input
             type="number"
